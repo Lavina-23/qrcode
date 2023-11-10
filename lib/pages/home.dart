@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qrcode/bloc/auth/auth_bloc.dart';
 import 'package:qrcode/routes/router.dart';
 
 class Homepage extends StatelessWidget {
@@ -27,6 +28,21 @@ class Homepage extends StatelessWidget {
                 },
                 child: const Text("PRODUCTS PAGE"))
           ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.read<AuthBloc>().add(AuthEventLogout());
+        },
+        child: BlocConsumer<AuthBloc, AuthState>(
+          listener: (context, state) {
+            if (state is AuthStateLogout) {
+              context.goNamed(Routes.login);
+            }
+          },
+          builder: (context, state) {
+            return const Icon(Icons.logout);
+          },
         ),
       ),
     );

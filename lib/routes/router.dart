@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qrcode/pages/detail_product.dart';
 import 'package:qrcode/pages/error.dart';
 import 'package:qrcode/pages/home.dart';
+import 'package:qrcode/pages/login.dart';
 import 'package:qrcode/pages/products.dart';
 import 'package:qrcode/pages/settings.dart';
 
@@ -11,6 +13,17 @@ part 'route_name.dart';
 
 // GoRouter configuration
 final router = GoRouter(
+  redirect: (context, state) {
+    // cek autentikasi
+    FirebaseAuth auth = FirebaseAuth.instance;
+    print(auth.currentUser);
+    if (auth.currentUser == null) {
+      // ga login
+      return "/login";
+    } else {
+      return null;
+    }
+  },
   errorBuilder: (context, state) => const ErrorPage(),
   routes: [
     GoRoute(path: '/', name: Routes.home, builder: (context, state) => const Homepage(), routes: [
@@ -31,6 +44,11 @@ final router = GoRouter(
       path: '/settings',
       name: Routes.settings,
       builder: (context, state) => const SettingsPage(),
+    ),
+    GoRoute(
+      path: '/login',
+      name: Routes.login,
+      builder: (context, state) => const LoginPage(),
     ),
   ],
 );
