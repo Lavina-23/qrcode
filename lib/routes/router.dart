@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
+import 'package:qrcode/pages/add_product.dart';
 import 'package:qrcode/pages/detail_product.dart';
 import 'package:qrcode/pages/error.dart';
 import 'package:qrcode/pages/home.dart';
 import 'package:qrcode/pages/login.dart';
 import 'package:qrcode/pages/products.dart';
-import 'package:qrcode/pages/settings.dart';
 
 export 'package:go_router/go_router.dart';
 
@@ -37,14 +37,14 @@ final router = GoRouter(
               name: Routes.detailProduct,
               builder: (context, state) => DetailProductPage(
                   state.pathParameters['id'].toString(), state.uri.queryParameters),
-            )
+            ),
           ]),
+      GoRoute(
+        path: 'addProduct',
+        name: Routes.addProduct,
+        builder: (context, state) => const AddProductPage(),
+      ),
     ]),
-    GoRoute(
-      path: '/settings',
-      name: Routes.settings,
-      builder: (context, state) => const SettingsPage(),
-    ),
     GoRoute(
       path: '/login',
       name: Routes.login,
