@@ -30,7 +30,7 @@ final router = GoRouter(
       GoRoute(
           path: 'products',
           name: Routes.products,
-          builder: (context, state) => const ProductsPage(),
+          builder: (context, state) => ProductsPage(),
           routes: [
             GoRoute(
               path: ':id',

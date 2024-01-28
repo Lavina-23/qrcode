@@ -1,12 +1,22 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:qrcode/models/product.dart';
 
 part 'product_event.dart';
 part 'product_state.dart';
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  Stream<QuerySnapshot<Products>> streamProducts() async* {
+    yield* firestore
+        .collection('products')
+        .withConverter(
+            fromFirestore: (snapshot, _) => Products.fromJson(snapshot.data()!),
+            toFirestore: (product, _) => product.toJson())
+        .snapshots();
+  }
+
   ProductBloc() : super(ProductStateInitial()) {
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
     on<ProductEventAddProduct>((event, emit) async {
       try {
         emit(ProductStateLoading());
@@ -18,9 +28,9 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         await firestore.collection("products").doc(hasil.id).update({
           "prodID": hasil.id,
         });
-        emit(ProductStateComplete());
+        emit(ProductStateComplete("Produk Berhasil Ditambahkan !"));
       } on FirebaseException catch (e) {
-        emit(ProductStateError(e.message ?? "Tidan bisa menambah produk"));
+        emit(ProductStateError(e.message ?? "Tidak bisa menambah produk"));
       } catch (e) {
         emit(ProductStateError("Tidak bisa menambah produk !"));
       }

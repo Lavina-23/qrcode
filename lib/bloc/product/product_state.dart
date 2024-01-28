@@ -12,7 +12,11 @@ class ProductStateInitial extends ProductState {}
 
 class ProductStateLoading extends ProductState {}
 
-class ProductStateComplete extends ProductState {}
+class ProductStateComplete extends ProductState {
+  ProductStateComplete(this.message);
+
+  final String message;
+}
 
 class ProductStateError extends ProductState {
   ProductStateError(this.message);
