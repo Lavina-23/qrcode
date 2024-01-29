@@ -17,9 +17,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await auth.signInWithEmailAndPassword(email: event.email, password: event.password);
         emit(AuthStateLogin());
       } on FirebaseAuthException catch (e) {
-        emit(AuthStateError(e.message.toString()));
+        String errorMessage = 'Email dan Password Salah !';
+        if (e.code == 'user-not-found') {
+          errorMessage = 'Email Anda Salah !';
+        } else if (e.code == 'wrong-password') {
+          errorMessage = 'Password Anda Salah !';
+        }
+        emit(AuthStateError(errorMessage));
       } catch (e) {
-        emit(AuthStateError(e.toString())); // pake emit untuk update state
+        emit(AuthStateError('Email dan Password Anda Salah !')); // pake emit untuk update state
       }
     });
     on<AuthEventLogout>((event, emit) async {

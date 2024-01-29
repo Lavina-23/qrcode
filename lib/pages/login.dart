@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qrcode/bloc/auth/auth_bloc.dart';
 import 'package:qrcode/routes/router.dart';
+import 'package:qrcode/theme.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 class LoginPage extends StatefulWidget {
@@ -19,48 +20,78 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("LOGIN PAGE"),
-        ),
         body: ListView(
+      children: [
+        Container(
+          padding: const EdgeInsets.only(left: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.asset('assets/img/hero-login.png'),
+              Text("Hello, \nNice To Meet You !", style: bold)
+            ],
+          ),
+        ),
+        Padding(
           padding: const EdgeInsets.all(20),
-          children: [
-            ReactiveForm(
-                formGroup: form,
-                child: Column(
-                  children: <Widget>[
-                    ReactiveTextField(
-                      formControlName: 'email',
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderSide: const BorderSide(),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          labelText: 'Email...'),
+          child: ReactiveForm(
+              formGroup: form,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    'Email',
+                    style: medium,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ReactiveTextField(
+                    formControlName: 'email',
+                    decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.circular(20)),
+                      border: OutlineInputBorder(
+                        borderSide: const BorderSide(),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                     ),
-                    const SizedBox(
-                      height: 20,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'Password',
+                    style: medium,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ReactiveTextField(
+                    formControlName: 'password',
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.circular(20)),
+                      border: OutlineInputBorder(
+                        borderSide: const BorderSide(),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                     ),
-                    ReactiveTextField(
-                      formControlName: 'password',
-                      obscureText: true,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderSide: const BorderSide(),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          labelText: 'Password...'),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    SizedBox(
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Center(
+                    child: SizedBox(
                       width: 150,
                       height: 50,
                       child: ReactiveFormConsumer(builder: (context, form, child) {
                         return ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.blueAccent,
+                                backgroundColor: primary,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20))),
                             onPressed: () {
@@ -81,16 +112,22 @@ class _LoginPageState extends State<LoginPage> {
                               },
                               builder: (context, state) {
                                 if (state is AuthStateLoading) {
-                                  return const Text("LOADING...");
+                                  return Text("LOADING...",
+                                      style: medium.copyWith(color: Colors.white));
                                 }
-                                return const Text("LOGIN");
+                                return Text(
+                                  "LOGIN",
+                                  style: medium.copyWith(color: Colors.white),
+                                );
                               },
                             ));
                       }),
-                    )
-                  ],
-                )),
-          ],
-        ));
+                    ),
+                  )
+                ],
+              )),
+        ),
+      ],
+    ));
   }
 }
