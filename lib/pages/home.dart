@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qrcode/bloc/auth/auth_bloc.dart';
 import 'package:qrcode/routes/router.dart';
+import 'package:qrcode/theme.dart';
 
 class Homepage extends StatelessWidget {
   const Homepage({super.key});
@@ -9,8 +10,12 @@ class Homepage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Homepage"),
-        centerTitle: true,
+        toolbarHeight: 110,
+        title: Text(
+          "Create a QR code for your product",
+          style: bold,
+          maxLines: 2,
+        ),
       ),
       body: GridView.builder(
         padding: const EdgeInsets.all(20),
@@ -46,9 +51,12 @@ class Homepage extends StatelessWidget {
               onTap = () {};
               break;
           }
-          return Material(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.blue[100],
+          return Container(
+            decoration: BoxDecoration(
+              border: Border.all(width: 4.0, color: Colors.black),
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.circular(12),
+            ),
             child: InkWell(
               onTap: onTap,
               borderRadius: BorderRadius.circular(10),
@@ -66,7 +74,10 @@ class Homepage extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  Text(title)
+                  Text(
+                    title,
+                    style: semiBold,
+                  )
                 ],
               ),
             ),
@@ -74,6 +85,8 @@ class Homepage extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+        backgroundColor: primary,
         onPressed: () {
           context.read<AuthBloc>().add(AuthEventLogout());
         },
@@ -84,7 +97,10 @@ class Homepage extends StatelessWidget {
             }
           },
           builder: (context, state) {
-            return const Icon(Icons.logout);
+            return const Icon(
+              Icons.logout,
+              color: Colors.white,
+            );
           },
         ),
       ),
