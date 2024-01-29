@@ -4,6 +4,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:qrcode/bloc/auth/auth_bloc.dart';
 import 'package:qrcode/bloc/product/product_bloc.dart';
 import 'package:qrcode/models/product.dart';
+import 'package:qrcode/theme.dart';
 import 'package:qrcode/utils/currency_format.dart';
 
 class ProductsPage extends StatelessWidget {
@@ -13,7 +14,11 @@ class ProductsPage extends StatelessWidget {
     ProductBloc productBloc = context.read<ProductBloc>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('All Products'),
+        title: Text(
+          'List Products',
+          style: bold,
+        ),
+        centerTitle: true,
       ),
       body: StreamBuilder<QuerySnapshot<Products>>(
         stream: productBloc.streamProducts(),
@@ -50,6 +55,7 @@ class ProductsPage extends StatelessWidget {
               Products product = allProducts[i];
               int price = product.price!;
               return Card(
+                color: Colors.blue[50],
                 elevation: 5,
                 margin: const EdgeInsets.only(bottom: 20),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -67,20 +73,23 @@ class ProductsPage extends StatelessWidget {
                             children: [
                               Text(
                                 product.code!,
-                                style: const TextStyle(fontWeight: FontWeight.bold),
+                                style: semiBold,
                               ),
                               const SizedBox(
                                 height: 5,
                               ),
-                              Text(product.name!),
+                              Text(
+                                product.name!,
+                                style: regular,
+                              ),
                               const SizedBox(
                                 height: 5,
                               ),
-                              Text(CurrencyFormat.formatToIDR(price)),
+                              Text(CurrencyFormat.formatToIDR(price), style: regular),
                               const SizedBox(
                                 height: 5,
                               ),
-                              Text("Stok : ${product.qty}")
+                              Text("Stok : ${product.qty}", style: regular)
                             ],
                           ),
                         ),
