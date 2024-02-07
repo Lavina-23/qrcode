@@ -21,7 +21,7 @@ class _AddProductPageState extends State<AddProductPage> {
   final formAddProduct = FormGroup({
     'code': FormControl<String>(validators: [Validators.required]),
     'name': FormControl<String>(validators: [Validators.required]),
-    'qty': FormControl<int>(validators: [Validators.required]),
+    'qty': FormControl<int>(validators: [Validators.required, Validators.min(1)]),
     'price': FormControl<int>(validators: [Validators.required]),
   });
 
@@ -100,6 +100,7 @@ class _AddProductPageState extends State<AddProductPage> {
                         ),
                       ),
                       validationMessages: {
+                        'min': (error) => "Product's quantity must be more than 0",
                         'required': (error) => "Product's quantity must not be empty !"
                       },
                     ),
@@ -147,8 +148,8 @@ class _AddProductPageState extends State<AddProductPage> {
                                       context: context,
                                       builder: (BuildContext context) {
                                         return const AlertDialog(
-                                          title: Text('Error'),
-                                          content: Text('Invalid Quantity !'),
+                                          title: Text('Attention !'),
+                                          content: Text('There must be no empty fields'),
                                         );
                                       });
                                 }

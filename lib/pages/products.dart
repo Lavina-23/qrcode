@@ -4,6 +4,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:qrcode/bloc/auth/auth_bloc.dart';
 import 'package:qrcode/bloc/product/product_bloc.dart';
 import 'package:qrcode/models/product.dart';
+import 'package:qrcode/routes/router.dart';
 import 'package:qrcode/theme.dart';
 import 'package:qrcode/utils/currency_format.dart';
 
@@ -15,7 +16,7 @@ class ProductsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'List Products',
+          'Product List',
           style: bold,
         ),
         centerTitle: true,
@@ -60,7 +61,10 @@ class ProductsPage extends StatelessWidget {
                 margin: const EdgeInsets.only(bottom: 20),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    context.goNamed(Routes.detailProduct,
+                        pathParameters: {'id': product.prodID!}, extra: product);
+                  },
                   borderRadius: BorderRadius.circular(10),
                   child: Container(
                     padding: const EdgeInsets.all(20),

@@ -17,6 +17,18 @@ class ProductEventAddProduct extends ProductEvent {
   int price;
 }
 
-class ProductEventEditProduct extends ProductEvent {}
+class ProductEventEditProduct extends ProductEvent {
+  ProductEventEditProduct(
+      {required this.prodID, required this.name, required this.qty, required this.price});
 
-class ProductEventDeleteProduct extends ProductEvent {}
+  String prodID;
+  String name;
+  int qty;
+  int price;
+}
+
+class ProductEventDeleteProduct extends ProductEvent {
+  ProductEventDeleteProduct(this.id);
+
+  final String id;
+}
